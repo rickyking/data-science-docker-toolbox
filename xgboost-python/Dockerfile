@@ -1,4 +1,4 @@
-FROM rickyking/xgboost
+FROM rickyking/ds-xgboost
 MAINTAINER Yi Jin <y.jin@me.com>
 
 
