@@ -1,5 +1,5 @@
-# Data Science Toolbox
+## Xgboost Anaconda 
 
-Xgboost ToolBox with Anaconda & Jupyter Notebook installed.
+Xgboost built with Anaconda & Jupyter Notebook installed.
 
-To start `docker run -it --rm -v [Your Directory]:/notebook -p 8888:8888 rickyking/xgboost-anaconda`
+To start `docker run -it --rm -v [Your Directory]:/notebook -p 8888:8888 rickyking/ds-xgboost-anaconda-jupyter`
