@@ -60,5 +60,6 @@ RUN curl -L --retry 3 \
   | tar x -C /usr/ \
   && mv /usr/$SPARK_DIST $SPARK_HOME
 
+EXPOSE 8080 4040 8081
 WORKDIR $SPARK_HOME
 CMD ["bin/spark-class", "org.apache.spark.deploy.master.Master"]
