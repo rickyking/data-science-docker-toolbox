@@ -1,6 +1,12 @@
 FROM ubuntu:15.04
 MAINTAINER Yi Jin "http://jinyi.me" "Fork From https://github.com/gettyimages/docker-spark"
 
+ENV SPARK_VERSION=1.5.2 \
+    HADOOP_PROFILE=2.6
+ENV HADOOP_VERSION=2.6.3
+
+LABEL SPARK_VERSION="$SPARK_VERSION" \
+      HADOOP_VERSION="$HADOOP_VERSION"
 # Users with other locales should set this in their derivative image
 RUN locale-gen "en_US.UTF-8"
 
@@ -32,8 +38,7 @@ RUN curl -L --retry 3 --insecure \
   && rm -rf $JAVA_HOME/man
 
 # HADOOP
-ENV HADOOP_VERSION=2.6.3 \
-    HADOOP_HOME=/usr/hadoop-$HADOOP_VERSION \
+ENV HADOOP_HOME=/usr/hadoop-$HADOOP_VERSION \
     HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop \
     PATH=$PATH:$HADOOP_HOME/bin
 RUN curl -L --retry 3 \
@@ -43,8 +48,7 @@ RUN curl -L --retry 3 \
  && rm -rf $HADOOP_HOME/share/doc
 
 # SPARK
-ENV SPARK_VERSION=1.5.2 \
-    HADOOP_PROFILE=2.6
+
 ENV SPARK_DIST=spark-$SPARK_VERSION-bin-hadoop$HADOOP_PROFILE \
     SPARK_HOME=/usr/spark-$SPARK_VERSION \
     PYSPARK_PYTHON=python3 \
