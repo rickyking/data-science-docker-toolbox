@@ -51,7 +51,7 @@ RUN jupyter notebook --generate-config --allow-root && \
 RUN /bin/bash -c "\
     source activate fastai && \
     conda install -y notebook && \
-    conda install -y -c conda-forge jupyterlab && \
+    conda install -y -c conda-forge nodejs jupyterlab && \
     jupyter labextension install @jupyterlab/toc && \
     conda install -y jupyter_contrib_nbextensions -c conda-forge && \
     jupyter nbextensions_configurator enable --user && \
