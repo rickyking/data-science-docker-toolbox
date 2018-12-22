@@ -51,6 +51,8 @@ RUN jupyter notebook --generate-config --allow-root && \
 RUN /bin/bash -c "\
     source activate fastai && \
     conda install -y notebook && \
+    conda install -y -c conda-forge jupyterlab && \
+    jupyter labextension install @jupyterlab/toc && \
     conda install -y jupyter_contrib_nbextensions -c conda-forge && \
     jupyter nbextensions_configurator enable --user && \
     jupyter nbextension enable collapsible_headings/main"
@@ -63,7 +65,7 @@ RUN /bin/bash -c "\
 # the pytorch version 0.3.0 installed to adapt M1200 GPU
 RUN /bin/bash -c "\
     source activate fastai &&\
-    conda install pytorch=0.3.0 -c pytorch"
+    conda install -y pytorch=0.3.0 -c pytorch"
 
 RUN echo export CUDA_DEVICE_ORDER="PCI_BUS_ID" >> ~/.bashrc
 
