@@ -45,7 +45,7 @@ RUN jupyter notebook --generate-config --allow-root && \
 
 WORKDIR /code
 
-CMD /bin/bash -c "source activate fastai && CUDA_VISIBLE_DEVICES=0 jupyter notebook --port=8888 --allow-root"
+CMD /bin/bash -c "UDA_VISIBLE_DEVICES=0 jupyter notebook --port=8888 --allow-root"
 
 
 # Install basic dependencies
