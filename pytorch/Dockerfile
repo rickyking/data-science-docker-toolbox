@@ -1,5 +1,5 @@
 # Get the nvidia cuda base container
-FROM nvidia/cuda:9.2-devel-ubuntu18.04 
+FROM nvidia/cuda:9.0-cudnn7-devel-ubuntu16.04
 
 # To allow unicode characters in the terminal
 ENV LANG C.UTF-8
@@ -25,25 +25,40 @@ RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
 
 ENV PATH /opt/conda/bin:$PATH
 
-
-
-# Install basic dependencies
-# or [magma-cuda80 | magma-cuda91] depending on your cuda version
-RUN /bin/bash -c "\
-    export CMAKE_PREFIX_PATH='$(dirname $(which conda))/../' && \
-    conda install -y numpy pyyaml mkl mkl-include setuptools cmake cffi typing && \
-    conda install -y -c pytorch magma-cuda92 && \
-    git clone --recursive https://github.com/pytorch/pytorch"
-
-
 RUN /bin/bash -c "\
     conda install -y -c conda-forge nodejs jupyterlab && \
     jupyter labextension install @jupyterlab/toc"
 
 
+
 RUN /bin/bash -c "\
-    export CMAKE_PREFIX_PATH=/opt/conda/bin/../ && \
-    cd pytorch && \
-    python setup.py install"
+    conda install -y pytorch torchvision -c pytorch"
+
+# Solves: `libjpeg.so.8: cannot open shared object file: No such file or directory`
+#          after `from PIL import Image`
+RUN apt-get install -y libjpeg-turbo8
+
+RUN jupyter notebook --generate-config --allow-root && \
+    echo "c.NotebookApp.ip = '0.0.0.0'" >> ~/.jupyter/jupyter_notebook_config.py && \
+    echo "c.NotebookApp.open_browser = False" >> ~/.jupyter/jupyter_notebook_config.py &&\
+    echo "c.NotebookApp.token = ''" >> ~/.jupyter/jupyter_notebook_config.py
+
+WORKDIR /code
+
+CMD /bin/bash -c "source activate fastai && CUDA_VISIBLE_DEVICES=0 jupyter notebook --port=8888 --allow-root"
+
+
+# Install basic dependencies
+# or [magma-cuda80 | magma-cuda91] depending on your cuda version
+# RUN /bin/bash -c "\
+#     export CMAKE_PREFIX_PATH='$(dirname $(which conda))/../' && \
+#     conda install -y numpy pyyaml mkl mkl-include setuptools cmake cffi typing && \
+#     conda install -y -c pytorch magma-cuda90 && \
+#     git clone --recursive https://github.com/pytorch/pytorch"
+
+# RUN /bin/bash -c "\
+#     export CMAKE_PREFIX_PATH=/opt/conda/bin/../ && \
+#     cd pytorch && \
+#     python setup.py install"
 
 

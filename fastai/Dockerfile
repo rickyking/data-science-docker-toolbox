@@ -82,4 +82,4 @@ RUN /bin/bash -c "\
 RUN echo "export MKL_DYNAMIC=FALSE" >> ~/.bashrc
 
 # Endpoint for jupyter notebook
-CMD /bin/bash -c "source activate fastai && CUDA_VISIBLE_DEVICES=0 jupyter notebook --port=8888 --allow-root"
+CMD /bin/bash -c "source activate fastai && CUDA_VISIBLE_DEVICES=0 jupyter lab --port=8888 --allow-root"
