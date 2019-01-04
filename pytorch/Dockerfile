@@ -41,7 +41,7 @@ RUN apt-get install -y libjpeg-turbo8
 RUN jupyter notebook --generate-config --allow-root && \
     echo "c.NotebookApp.ip = '0.0.0.0'" >> ~/.jupyter/jupyter_notebook_config.py && \
     echo "c.NotebookApp.open_browser = False" >> ~/.jupyter/jupyter_notebook_config.py &&\
-    echo "c.NotebookApp.token = ''" >> ~/.jupyter/jupyter_notebook_config.py
+    echo "c.NotebookApp.token = 'my_token'" >> ~/.jupyter/jupyter_notebook_config.py
 
 WORKDIR /code
 
